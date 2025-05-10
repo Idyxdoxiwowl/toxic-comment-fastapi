@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>BERT Toxic Comment Classifier</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #2c3e50;
+      max-width: 800px;
+      margin: auto;
+      padding: 40px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 20px;
+      font-size: 16px;
+      background-color: #3b5998;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .label {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .active {
+      background-color: #e74c3c;
+      color: white;
+    }
+    .inactive {
+      background-color: #ecf0f1;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <h1>BERT Toxic Comment Classifier</h1>
+  <textarea id="text" placeholder="Enter your comment..."></textarea>
+  <button onclick="predict()">Check Toxicity</button>
+  <div id="results"></div>
+
+  <script>
+    function predict() {
+      const text = document.getElementById("text").value;
+      fetch("/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById("results");
+        container.innerHTML = "<h3>Detected Labels:</h3>";
+        for (const label in data) {
+          const span = document.createElement("span");
+          span.className = "label " + (data[label] ? "active" : "inactive");
+          span.textContent = label;
+          container.appendChild(span);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
