@@ -30,7 +30,6 @@ def predict(input: CommentInput):
     result = {label: float(pred[i]) for i, label in enumerate(LABELS)}
     return result
 
-# === Роут для отображения index.html ===
 @app.get("/", response_class=HTMLResponse)
-def serve_frontend():
+def serve_index():
     return Path("index.html").read_text(encoding="utf-8")
