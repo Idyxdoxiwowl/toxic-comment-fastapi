@@ -29,3 +29,15 @@ def predict(input: CommentInput):
     # Преобразуем в словарь {"label": вероятность}
     result = {label: float(pred[i]) for i, label in enumerate(LABELS)}
     return result
+
+
+@app.get("/")
+def root():
+    return {
+        "message": "🚀 Добро пожаловать в Toxic Comment Classifier API!",
+        "docs": "Откройте /docs для Swagger UI",
+        "example": {
+            "text": "You're such an idiot."
+        },
+        "predict_endpoint": "/predict (POST)"
+    }
