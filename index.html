@@ -2,62 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Logistic Regression Toxic Comment Classifier</title>
+  <title>Toxicity Detector</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      color: #2c3e50;
-      max-width: 800px;
-      margin: auto;
-      padding: 40px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #2c3e50, #4ca1af);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 60px 20px;
     }
+
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+      font-size: 2.5rem;
+      font-weight: 700;
     }
+
+    .container {
+      background-color: #ffffff11;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
     textarea {
       width: 100%;
-      height: 150px;
-      padding: 10px;
+      height: 140px;
+      padding: 12px;
       font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-    button {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 20px;
-      font-size: 16px;
-      background-color: #3b5998;
-      color: white;
+      border-radius: 10px;
       border: none;
-      border-radius: 6px;
-      cursor: pointer;
+      resize: vertical;
+      background-color: #ffffff;
+      color: #2c3e50;
+      margin-bottom: 20px;
     }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #1abc9c;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #16a085;
+    }
+
+    #results {
+      margin-top: 25px;
+    }
+
     .label {
       display: inline-block;
-      margin: 5px;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-weight: bold;
+      margin: 6px 8px;
+      padding: 10px 16px;
+      border-radius: 50px;
       font-size: 14px;
+      font-weight: bold;
+      transition: 0.3s;
     }
+
     .active {
       background-color: #e74c3c;
       color: white;
     }
+
     .inactive {
-      background-color: #ecf0f1;
-      color: #7f8c8d;
+      background-color: #95a5a6;
+      color: #ecf0f1;
     }
   </style>
 </head>
 <body>
-  <h1>Logistic Regression Toxic Comment Classifier</h1>
-  <textarea id="text" placeholder="Enter your comment..."></textarea>
-  <button onclick="predict()">Check Toxicity</button>
-  <div id="results"></div>
+  <h1>Toxicity Detector</h1>
+  <div class="container">
+    <textarea id="text" placeholder="Type a comment here..."></textarea>
+    <button onclick="predict()">Analyze Comment</button>
+    <div id="results"></div>
+  </div>
 
   <script>
     function predict() {
@@ -70,7 +105,7 @@
       .then(res => res.json())
       .then(data => {
         const container = document.getElementById("results");
-        container.innerHTML = "<h3>Detected Labels:</h3>";
+        container.innerHTML = "<h3 style='margin-bottom: 10px;'>Labels Detected:</h3>";
         for (const label in data) {
           const span = document.createElement("span");
           span.className = "label " + (data[label] ? "active" : "inactive");
